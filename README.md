@@ -1,4 +1,4 @@
-# PT-MWRN 
+# VD Net
 
 [Source](https://github.com/zsyOAOA/VDNet)
 
