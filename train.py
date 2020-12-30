@@ -42,6 +42,7 @@ def train(args):
     average_loss = MovingAverage(args.save_every)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     if args.restart:
+        model = weight_init_kaiming(model)
         start_epoch = 0
         global_step = 0
         best_loss = np.inf
