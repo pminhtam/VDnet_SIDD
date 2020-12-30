@@ -31,7 +31,6 @@ def train(args):
     _C = 3
 
     model = VDN(_C).to(device)
-    model = weight_init_kaiming(model)
 
     optimizer = optim.Adam(
         model.parameters(),
@@ -62,6 +61,7 @@ def train(args):
             optimizer.load_state_dict(checkpoint['optimizer'])
             print('=> loaded checkpoint (epoch {}, global_step {})'.format(start_epoch, global_step))
         except:
+            model = weight_init_kaiming(model)
             start_epoch = 0
             global_step = 0
             best_loss = np.inf
