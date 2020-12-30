@@ -1,6 +1,6 @@
 import torch
 import argparse
-from model import VDN
+from model import VDN,weight_init_kaiming
 from torch.utils.data import DataLoader
 from loss.loss import loss_fn
 import os
@@ -31,6 +31,8 @@ def train(args):
     _C = 3
 
     model = VDN(_C).to(device)
+    model = weight_init_kaiming(model)
+
     optimizer = optim.Adam(
         model.parameters(),
         lr=2e-4
