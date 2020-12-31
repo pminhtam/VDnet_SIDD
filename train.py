@@ -1,6 +1,6 @@
 import torch
 import argparse
-from model import VDN,weight_init_kaiming
+from model import VDN,weight_init_kaiming,VDN_2
 from torch.utils.data import DataLoader
 from loss.loss import loss_fn
 import os
@@ -29,9 +29,13 @@ def train(args):
     if not os.path.exists(checkpoint_dir):
         os.makedirs(checkpoint_dir)
     _C = 3
-
-    model = VDN(_C).to(device)
-
+    if args.model_type == "VD":
+        model = VDN(_C).to(device)
+    elif args.model_type == 'VD_kpn':
+        model = VDN_2(_C).to(device)
+    else:
+        print(" Model type not valid")
+        return
     optimizer = optim.Adam(
         model.parameters(),
         lr=2e-4
@@ -71,6 +75,9 @@ def train(args):
         for step, data in enumerate(data_loader):
             im_noisy, im_gt, sigmaMapEst, sigmaMapGt = [x.to(device) for x in data]
             # print(im_noisy)
+            # print(im_gt)
+            # print(sigmaMapEst)
+            # print(sigmaMapGt)
             phi_Z, phi_sigma = model(im_noisy,'train')
             # print(pred.size())
             loss, g_lh, kl_g, kl_Igam = criterion(phi_Z, phi_sigma, im_noisy, im_gt,
@@ -118,6 +125,7 @@ if __name__ == "__main__":
     parser.add_argument('--cuda', '-c', action='store_true', help='whether to train on the GPU')
     parser.add_argument('--checkpoint', '-ckpt', type=str, default='checkpoint/',
                         help='the checkpoint to eval')
+    parser.add_argument('--model_type', '-m' , default="VD", help='type of model : VD, VD_kpn')
     parser.add_argument('--load_type', "-l" ,default="best", type=str, help='Load type best_or_latest ')
 
     args = parser.parse_args()
