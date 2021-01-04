@@ -41,8 +41,8 @@ def test(args):
     model = model.to(device)
     trans = transforms.ToPILImage()
     torch.manual_seed(0)
-    all_noisy_imgs = scipy.io.loadmat(args.noise_dir)['siddplus_valid_noisy_srgb']
-    all_clean_imgs = scipy.io.loadmat(args.gt)['siddplus_valid_gt_srgb']
+    all_noisy_imgs = scipy.io.loadmat(args.noise_dir)['ValidationNoisyBlocksSrgb']
+    all_clean_imgs = scipy.io.loadmat(args.gt)['ValidationGtBlocksSrgb']
     # noisy_path = sorted(glob.glob(args.noise_dir+ "/*.png"))
     # clean_path = [ i.replace("noisy","clean") for i in noisy_path]
     i_imgs,_,_,_ = all_noisy_imgs.shape
