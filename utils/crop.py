@@ -28,11 +28,13 @@ stride = 512-128
 num_patch = 0
 C = 3
 
-parent_dir = '/content/drive/MyDrive/New SIDD/crop medium'
+parent_dir = './image'
 import shutil
 if os.path.exists(parent_dir):
   shutil.rmtree(parent_dir)
 os.mkdir(parent_dir)
+os.mkdir(os.path.join(parent_dir, 'Noisy/'))
+os.mkdir(os.path.join(parent_dir, 'Clean/'))
 
 
 for ii in tqdm(range(len(path_all_gt))):
