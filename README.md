@@ -11,3 +11,7 @@ Paper [Variational Denoising Network: Toward Blind Noise Modeling and Removal (N
 ```
 CUDA_VISIBLE_DEVICES=0 python train.py -n ../image/noise/ -g ../image/gt/ -sz 512 -bs 4 -e 100 -se 100 -le 10 -nw 4 -c -ckpt checkpoint  --restart```
 ```
+
+## Have done
+
+- Add Kpn to model -> VD_kpn

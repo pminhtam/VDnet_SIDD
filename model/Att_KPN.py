@@ -236,8 +236,9 @@ class Att_KPN(nn.Module):
         conv9 = self.conv9(torch.cat([conv1, F.interpolate(conv8, scale_factor=2, mode=self.upMode)], dim=1))
         # return channel K*K*N
         core = self.outc(conv9)
+        pred_img_i, pred_img = self.kernel_pred(data, core, 1.0)
 
-        return self.kernel_pred(data, core, 1.0)
+        return pred_img_i, pred_img
 
 if __name__ == '__main__':
     kpn = Att_KPN(

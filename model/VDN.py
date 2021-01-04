@@ -63,7 +63,9 @@ class VDN_2(nn.Module):
             phi_sigma = self.SNet(x)
             return phi_Z, phi_sigma
         elif mode.lower() == 'test':
-            phi_Z = self.DNet(x)
+            phi_Z_2 = self.DNet(x)
+            _, img = self.att_kpn(x)
+            phi_Z = torch.cat([img,phi_Z_2],axis=1)
             return phi_Z
         elif mode.lower() == 'sigma':
             phi_sigma = self.SNet(x)

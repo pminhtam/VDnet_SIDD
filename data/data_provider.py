@@ -107,8 +107,11 @@ class SingleLoader(data.Dataset):
         # image_gt = Image.open(os.path.join(self.gt_dir, image_folder_name_gt, name_image_gt)).convert('RGB')
         image_gt = np.array(Image.open(self.noise_path[index].replace("Noisy",'Clean')).convert('RGB'))
         # print(image_gt)
-        image_gt = self.crop_patch(image_gt)
-        image_noise = self.crop_patch(image_noise)
+        H, W, C2 = image_gt.shape
+        ind_H = random.randint(0, H-self.image_size)
+        ind_W = random.randint(0, W-self.image_size)
+        image_gt = self.crop_patch(image_gt,ind_H,ind_W)
+        image_noise = self.crop_patch(image_noise,ind_H,ind_W)
         image_gt = img_as_float(image_gt)
         # print(image_gt)
         image_noise = img_as_float(image_noise)
@@ -131,9 +134,6 @@ class SingleLoader(data.Dataset):
 
     def __len__(self):
         return len(self.noise_path)
-    def crop_patch(self, imgs_sets):
-        H, W, C2 = imgs_sets.shape
-        ind_H = random.randint(0, H-self.image_size)
-        ind_W = random.randint(0, W-self.image_size)
+    def crop_patch(self, imgs_sets,ind_H,ind_W):
         im_gt = np.array(imgs_sets[ind_H:ind_H+self.image_size, ind_W:ind_W+self.image_size, :])
         return im_gt
