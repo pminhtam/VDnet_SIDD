@@ -57,10 +57,10 @@ for ii in tqdm(range(len(path_all_gt))):
               # pch_imgs = np.concatenate((pch_noisy, pch_gt), axis=2)
               # h5_file.create_dataset(name=str(num_patch), shape=pch_imgs.shape,
               #                                                 dtype=pch_imgs.dtype, data=pch_imgs)
-              folder_path = os.path.join(parent_dir, str(num_patch)) 
-              os.mkdir(folder_path) 
-              cv2.imwrite(os.path.join(folder_path, 'Noisy/'+ str(num_patch)+'.png'), pch_noisy)
-              cv2.imwrite(os.path.join(folder_path, 'Clean/'+ str(num_patch)+'.png'), pch_gt)
+              # folder_path = os.path.join(parent_dir, str(num_patch))
+              # os.mkdir(folder_path)
+              cv2.imwrite(os.path.join(parent_dir, 'Noisy/'+ str(num_patch)+'.png'), pch_noisy)
+              cv2.imwrite(os.path.join(parent_dir, 'Clean/'+ str(num_patch)+'.png'), pch_gt)
               num_patch += 1
   except:
     print(path_all_noisy[ii])
